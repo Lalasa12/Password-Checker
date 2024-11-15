@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        input {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        #strength {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .weak {
+            color: red;
+        }
+        .moderate {
+            color: orange;
+        }
+        .strong {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Password Strength Analyzer</h1>
+    <input type="password" id="password" placeholder="Enter your password">
+    <div id="strength" class="weak">Password Strength: Weak</div>
+
+    <script>
+        document.getElementById('password').addEventListener('input', function () {
+            const password = this.value;
+            let strength = 0;
+
+            // Check conditions for password strength
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            // Determine strength message and color
+            const strengthDiv = document.getElementById('strength');
+            let strengthMessage = '';
+            let strengthClass = '';
+            switch (strength) {
+                case 0:
+                case 1:
+                    strengthMessage = 'Weak';
+                    strengthClass = 'weak';
+                    break;
+                case 2:
+                case 3:
+                    strengthMessage = 'Moderate';
+                    strengthClass = 'moderate';
+                    break;
+                case 4:
+                case 5:
+                    strengthMessage = 'Strong';
+                    strengthClass = 'strong';
+                    break;
+            }
+
+            strengthDiv.textContent = `Password Strength: ${strengthMessage}`;
+            strengthDiv.className = strengthClass;
+        });
+    </script>
+</body>
+</html>
